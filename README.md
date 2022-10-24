@@ -3,6 +3,8 @@
 Note: You can not push commits to the main branch directly. Take the following steps instead.
 
 ## Suggested Workflow(For Github Desktop)
+Below is the suggested workflow to add new features to the project
+
 1. Open up the repository in Github Desktop
 2. Click on "Branch" (the fifth button from the left in the top menu bar)
 3. Create a new branch by clicking "New Branch..." in the dropdown
@@ -26,3 +28,14 @@ After each merge, you might want to delete the temporary feature branch. Follow 
 2. Click on the "Current branch" (the second box from left on the top)
 3. Right click on the branch you want to delete in the dropdown
 4. Click "Delete" and select "yes, delete this branch on the remote"
+
+## Common Issues
+
+1. When opening up Unreal Project File, it fails to build? 
+    - Follow the prompts to rebuild the project.
+2. Above solution does not work, and Unreal Prompts "Fail to compile..."
+    - Right click on the Unreal Project File "CSE381_HW1" and click on "Generate Visual Studio Project files" if no "sln" file is present. Then open up the "sln" file and build the solution. Fix any compliation errors shown.
+3. Visual Studio wrongly prompts syntax errors?
+    - Try "refresh visual studio project files" under the "file" tab on the top of the Unreal Engine Editor
+4. Visual Studio misses projects or dependencies?
+    - Try "refresh visual studio project files" under the "file" tab on the top of the Unreal Engine Editor
