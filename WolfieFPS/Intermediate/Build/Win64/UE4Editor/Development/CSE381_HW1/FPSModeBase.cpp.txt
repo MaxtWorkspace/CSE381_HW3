@@ -1,0 +1,7 @@
+F:\GitHub\CSE381_HW3\Intermediate\Build\Win64\UE4Editor\Development\CSE381_HW1\Definitions.CSE381_HW1.h
+F:\GitHub\CSE381_HW3\Source\CSE381_HW1\FPSModeBase.h
+G:\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\GameFramework/GameModeBase.h
+G:\Epic Games\UE_4.27\Engine\Source\Runtime\Engine\Classes\Engine/ServerStatReplicator.h
+G:\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\ServerStatReplicator.generated.h
+G:\Epic Games\UE_4.27\Engine\Intermediate\Build\Win64\UE4Editor\Inc\Engine\GameModeBase.generated.h
+F:\GitHub\CSE381_HW3\Intermediate\Build\Win64\UE4Editor\Inc\CSE381_HW1\FPSModeBase.generated.h

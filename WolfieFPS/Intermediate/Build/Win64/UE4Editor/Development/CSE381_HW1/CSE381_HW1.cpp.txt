@@ -1,0 +1,2 @@
+F:\GitHub\CSE381_HW3\Intermediate\Build\Win64\UE4Editor\Development\CSE381_HW1\Definitions.CSE381_HW1.h
+F:\GitHub\CSE381_HW3\Source\CSE381_HW1\CSE381_HW1.h
