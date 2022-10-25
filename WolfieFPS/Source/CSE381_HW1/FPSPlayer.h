@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Ball.h"
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
@@ -16,6 +17,10 @@ class CSE381_HW1_API AFPSPlayer : public ACharacter
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	// Projectile class to spawn.
+	UPROPERTY(EditDefaultsOnly, Category = Projectile)
+	TSubclassOf<class ABall> ProjectileClass;
 
 public:
 	// Sets default values for this character's properties
@@ -51,6 +56,10 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category = Mesh)
 	USkeletalMeshComponent* FPSMesh;
 
-	//UFUNCTION()
-	//void Fire();
+	UFUNCTION()
+	void Fire();
+
+	// Gun muzzle offset from the camera location.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
+	FVector MuzzleOffset;
 };
