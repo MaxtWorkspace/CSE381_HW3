@@ -17,6 +17,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	float destroyTimer;
+
 public:
 	// Sets default values for this actor's properties
 	ABall();
@@ -34,4 +36,15 @@ public:
 
 	// Function that initializes the projectile's velocity in the shoot direction.
 	void FireInDirection(const FVector& ShootDirection);
+
+	UPROPERTY(VisibleDefaultsOnly, Category = Projectile)
+	UStaticMeshComponent* ProjectileMeshComponent;
+
+	// Projectile material
+	UPROPERTY(VisibleDefaultsOnly, Category = Movement)
+	UMaterialInstanceDynamic* ProjectileMaterialInstance;
+
+	// Function that is called when the projectile hits something.
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 };
