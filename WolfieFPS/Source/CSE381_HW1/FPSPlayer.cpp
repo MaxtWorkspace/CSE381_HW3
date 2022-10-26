@@ -103,6 +103,7 @@ void AFPSPlayer::StopJump()
 void AFPSPlayer::Fire()
 {
 	if (ballInHand) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("2"));
 		ballInHand->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 		// Get the camera transform.
 		FVector CameraLocation;
@@ -137,21 +138,23 @@ void AFPSPlayer::CatchBall(ABall* ball) {
 		ballInHand->AttachToComponent(FPSCameraComponent, FAttachmentTransformRules::KeepWorldTransform);
 	}
 	else {
-		ball->Destroy();
+		//ball->Destroy();
 	}
 }
 
 void AFPSPlayer::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
 	if (!OtherActor) return;
-
 	ABall* ball = Cast<ABall>(OtherActor);
 	if (ball) {
+		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("a"));
 		if (ball->side == 2) {
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("b"));
 			AFPSModeBase* gm = Cast<AFPSModeBase>(GetWorld()->GetAuthGameMode());
 			gm->OnPlayerHit();
 			ball->Destroy();
 		}
 		else {
+			GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("c"));
 			CatchBall(ball);
 		}
 	}

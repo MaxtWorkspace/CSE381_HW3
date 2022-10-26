@@ -58,7 +58,7 @@ ABall::ABall()
 	ProjectileMeshComponent->SetupAttachment(RootComponent);
 
 	side = 0;
-	destroyTimer = 10.0f;
+	destroyTimer = 1000.0f;
 	stopped = false;
 }
 
