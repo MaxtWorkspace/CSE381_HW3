@@ -8,7 +8,6 @@ ABall::ABall()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-	destroyTimer = 15.0f;
 
 	if (!RootComponent)
 	{
@@ -20,8 +19,6 @@ ABall::ABall()
 		CollisionComponent = CreateDefaultSubobject<USphereComponent>(TEXT("SphereComponent"));
 		// Set the sphere's collision profile name to "Projectile".
 		CollisionComponent->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
-		// Event called when component hits something.
-		CollisionComponent->OnComponentHit.AddDynamic(this, &ABall::OnHit);
 		// Set the sphere's collision radius.
 		CollisionComponent->InitSphereRadius(15.0f);
 		// Set the root component to be the collision component.
@@ -59,6 +56,10 @@ ABall::ABall()
 	ProjectileMeshComponent->SetMaterial(0, ProjectileMaterialInstance);
 	ProjectileMeshComponent->SetRelativeScale3D(FVector(0.09f, 0.09f, 0.09f));
 	ProjectileMeshComponent->SetupAttachment(RootComponent);
+
+	side = 0;
+	destroyTimer = 10.0f;
+	stopped = false;
 }
 
 // Called when the game starts or when spawned
@@ -73,7 +74,8 @@ void ABall::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//Destroy the Ball after a fixed time
-	destroyTimer -= DeltaTime;
+	if(!stopped) destroyTimer -= DeltaTime;
+
 	if (destroyTimer <= 0.0f) {
 		Destroy();
 	}
@@ -82,14 +84,16 @@ void ABall::Tick(float DeltaTime)
 // Function that initializes the projectile's velocity in the shoot direction.
 void ABall::FireInDirection(const FVector& ShootDirection)
 {
+	SetActorEnableCollision(true);
 	ProjectileMovementComponent->Velocity = ShootDirection * ProjectileMovementComponent->InitialSpeed;
+	ProjectileMovementComponent->ProjectileGravityScale = 1.0f;
+	stopped = false;
 }
 
-// Function that is called when the projectile hits something.
-void ABall::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
-{
-	if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
-	{
-		OtherComponent->AddImpulseAtLocation(ProjectileMovementComponent->Velocity * 100.0f, Hit.ImpactPoint);
-	}
+void ABall::ResetTransform(const FVector& loc, const FQuat& dir) {
+	ProjectileMovementComponent->Velocity.Set(0.0f,0.0f,0.0f);
+	ProjectileMovementComponent->ProjectileGravityScale = 0.0f;
+	SetActorLocationAndRotation(loc, dir, false, 0, ETeleportType::None);
+	SetActorEnableCollision(false);
+	stopped = true;
 }
