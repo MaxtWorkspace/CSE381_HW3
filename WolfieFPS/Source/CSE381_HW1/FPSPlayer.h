@@ -7,6 +7,7 @@
 #include "GameFramework/Character.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "FPSModeBase.h"
 #include "FPSPlayer.generated.h"
 
 UCLASS()
@@ -21,6 +22,10 @@ protected:
 	// Projectile class to spawn.
 	UPROPERTY(EditDefaultsOnly, Category = Projectile)
 	TSubclassOf<class ABall> ProjectileClass;
+
+	ABall* ballInHand;
+
+	UCapsuleComponent* collider;
 
 public:
 	// Sets default values for this character's properties
@@ -62,4 +67,10 @@ public:
 	// Gun muzzle offset from the camera location.
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = Gameplay)
 	FVector MuzzleOffset;
+
+	void CatchBall(ABall* ball);
+
+	// Function that is called when the projectile hits something.
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 };

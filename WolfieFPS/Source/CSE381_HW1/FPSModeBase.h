@@ -15,4 +15,14 @@ class CSE381_HW1_API AFPSModeBase : public AGameModeBase
 	GENERATED_BODY()
 
 	virtual void StartPlay() override;
+
+	int playerHP;
+	int score;
+
+public:
+	void OnPlayerHit();
+
+	void OnWolfieHit(bool isBoss);
+
+	
 };

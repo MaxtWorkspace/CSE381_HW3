@@ -19,6 +19,8 @@ protected:
 
 	float destroyTimer;
 
+	bool stopped;
+
 public:
 	// Sets default values for this actor's properties
 	ABall();
@@ -44,7 +46,8 @@ public:
 	UPROPERTY(VisibleDefaultsOnly, Category = Movement)
 	UMaterialInstanceDynamic* ProjectileMaterialInstance;
 
-	// Function that is called when the projectile hits something.
-	UFUNCTION()
-	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+	void ResetTransform(const FVector& loc, const FQuat& dir);
+
+	//0 for neutral   1 for player    2 for wolfies
+	int side;
 };

@@ -35,6 +35,10 @@ AFPSPlayer::AFPSPlayer()
 	// Disable some environmental shadows to preserve the illusion of having a single mesh.
 	FPSMesh->bCastDynamicShadow = false;
 	FPSMesh->CastShadow = false;
+
+	collider = FindComponentByClass<UCapsuleComponent>();
+	check(collider != nullptr);
+	collider->OnComponentHit.AddDynamic(this, &AFPSPlayer::OnHit);
 }
 
 // Called when the game starts or when spawned
@@ -98,16 +102,27 @@ void AFPSPlayer::StopJump()
 
 void AFPSPlayer::Fire()
 {
-	// Attempt to fire a projectile.
-	if (ProjectileClass)
-	{
+	if (ballInHand) {
+		ballInHand->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 		// Get the camera transform.
 		FVector CameraLocation;
 		FRotator CameraRotation;
 		GetActorEyesViewPoint(CameraLocation, CameraRotation);
+		FRotator MuzzleRotation = CameraRotation;
+		MuzzleRotation.Pitch += 10.0f;
+		FVector LaunchDirection = MuzzleRotation.Vector();
+		ballInHand->FireInDirection(LaunchDirection);
+		ballInHand = nullptr;
+	}
+}
 
-		// Set MuzzleOffset to spawn projectiles slightly in front of the camera.
-		MuzzleOffset.Set(100.0f, 0.0f, 0.0f);
+void AFPSPlayer::CatchBall(ABall* ball) {
+	// Attempt to catch a ball
+	if (ballInHand == nullptr) {
+		// Get the camera transform.
+		FVector CameraLocation;
+		FRotator CameraRotation;
+		GetActorEyesViewPoint(CameraLocation, CameraRotation);
 
 		// Transform MuzzleOffset from camera space to world space.
 		FVector MuzzleLocation = CameraLocation + FTransform(CameraRotation).TransformVector(MuzzleOffset);
@@ -115,21 +130,29 @@ void AFPSPlayer::Fire()
 		FRotator MuzzleRotation = CameraRotation;
 		MuzzleRotation.Pitch += 10.0f;
 
-		UWorld* World = GetWorld();
-		if (World)
-		{
-			FActorSpawnParameters SpawnParams;
-			SpawnParams.Owner = this;
-			SpawnParams.Instigator = GetInstigator();
+		ball->ResetTransform(MuzzleLocation, MuzzleRotation.Quaternion());
+		ball->side = 1;
 
-			// Spawn the projectile at the muzzle.
-			ABall* Projectile = World->SpawnActor<ABall>(ProjectileClass, MuzzleLocation, MuzzleRotation, SpawnParams);
-			if (Projectile)
-			{
-				// Set the projectile's initial trajectory.
-				FVector LaunchDirection = MuzzleRotation.Vector();
-				Projectile->FireInDirection(LaunchDirection);
-			}
+		ballInHand = ball;
+		ballInHand->AttachToComponent(FPSCameraComponent, FAttachmentTransformRules::KeepWorldTransform);
+	}
+	else {
+		ball->Destroy();
+	}
+}
+
+void AFPSPlayer::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
+	if (!OtherActor) return;
+
+	ABall* ball = Cast<ABall>(OtherActor);
+	if (ball) {
+		if (ball->side == 2) {
+			AFPSModeBase* gm = Cast<AFPSModeBase>(GetWorld()->GetAuthGameMode());
+			gm->OnPlayerHit();
+			ball->Destroy();
+		}
+		else {
+			CatchBall(ball);
 		}
 	}
 }
