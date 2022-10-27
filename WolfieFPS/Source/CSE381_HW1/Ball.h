@@ -48,6 +48,9 @@ public:
 
 	void ResetTransform(const FVector& loc, const FQuat& dir);
 
+	UFUNCTION()
+	void OnProjectileBounce(const FHitResult& ImpactResult, const FVector& ImpactVelocity);
+
 	//0 for neutral   1 for player    2 for wolfies
 	int side;
 };

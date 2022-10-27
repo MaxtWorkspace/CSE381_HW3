@@ -67,6 +67,8 @@ void ABall::BeginPlay()
 {
 	Super::BeginPlay();
 
+	ProjectileMovementComponent->OnProjectileBounce.AddDynamic(this, &ABall::OnProjectileBounce);
+
 }
 
 // Called every frame
@@ -97,4 +99,9 @@ void ABall::ResetTransform(const FVector& loc, const FQuat& dir) {
 	SetActorLocationAndRotation(loc, dir, false, 0, ETeleportType::None);
 	SetActorEnableCollision(false);
 	stopped = true;
+}
+
+void ABall::OnProjectileBounce(const FHitResult& ImpactResult, const FVector& ImpactVelocity) {
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("jjjjjj"));
+	side = 0;
 }

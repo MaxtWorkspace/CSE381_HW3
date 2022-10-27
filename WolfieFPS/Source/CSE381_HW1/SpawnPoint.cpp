@@ -40,7 +40,7 @@ void ASpawnPoint::Tick(float DeltaTime)
 			// Spawn the projectile at the spawn point.
 			for (int i = 0; i < spawnCount; i++) {
 				ABall* ball = World->SpawnActor<ABall>(ProjectileClass, location, rotation, SpawnParams);
-				FVector dir(FMath::RandRange(0.0f, 0.1f), FMath::RandRange(0.0f, 0.1f), FMath::RandRange(0.0f, 0.0f));
+				FVector dir(FMath::RandRange(-0.1f, 0.1f), FMath::RandRange(-0.1f, 0.1f), FMath::RandRange(0.0f, 0.0f));
 				ball->FireInDirection(dir);
 			}
 		}

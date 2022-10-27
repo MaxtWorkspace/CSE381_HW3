@@ -24,7 +24,7 @@ void AFPSHUD::DrawHUD()
     }
 
     //Score = FPSModeBase->score;
-    GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Green, FString::Printf(TEXT("%u"), Score));
+    //GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Green, FString::Printf(TEXT("%u"), Score));
 
 
     // Find the center of our canvas.
@@ -42,7 +42,7 @@ void AFPSHUD::DrawHUD()
     // Create a new FCanvasTextItem instance to contain the text.
     FCanvasTextItem TextItem(ScoreDrawPosition, FText(), GEngine->GetLargeFont(), FLinearColor::Green);
     // Add the text into the FCanvasTextItem.
-    TextItem.Text = FText::Format(LOCTEXT("SnippetHeader", "Wolfies Remaining: {0}"), 6-Score);
+    TextItem.Text = FText::Format(LOCTEXT("SnippetHeader", "Guard Wolfies Remaining: {0}"), 6-Score-1);
     TextItem.Scale.Set(3.0f, 3.0f);
     // Draw the text to the screen with FCanvas::DrawItem.
     Canvas->DrawItem(TextItem, 100.0f, 50.0f);
@@ -70,6 +70,9 @@ void AFPSHUD::LoseGame() {
     GameText = FText::Format(LOCTEXT("SnippetHeader", "Game Over! You Lost! \n Score: {0}"), Score);
     Score = 0;
 }
+
+//add tick
+//after a few sec, the game restarts and the game over text goes away
 
 
 #undef LOCTEXT_NAMESPACE
