@@ -36,7 +36,7 @@ void AWolfie::Fire()
 {
 	if (ballInHand) {
 		ballInHand->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
-		FVector LaunchDirection = GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation() - GetTransform().GetLocation();
+		FVector LaunchDirection = UKismetMathLibrary::GetDirectionUnitVector(GetTransform().GetLocation(), GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
 		ballInHand->FireInDirection(LaunchDirection);
 		ballInHand = nullptr;
 	}

@@ -7,6 +7,7 @@
 #include "Ball.h"
 #include "Components/CapsuleComponent.h"
 #include "FPSModeBase.h"
+#include "Kismet/KismetMathLibrary.h"
 #include "Wolfie.generated.h"
 
 UCLASS()
