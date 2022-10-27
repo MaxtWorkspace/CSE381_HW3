@@ -55,7 +55,6 @@ void AFPSHUD::DrawHUD()
     TextItem2.Scale.Set(3.0f, 3.0f);
     // Draw the text to the screen with FCanvas::DrawItem.
     Canvas->DrawItem(TextItem2, Center.X - 100.0f, Center.Y - 50.0f);
-
 }
 
 void AFPSHUD::IncScore() {

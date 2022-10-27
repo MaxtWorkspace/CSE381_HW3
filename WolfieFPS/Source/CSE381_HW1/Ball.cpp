@@ -58,7 +58,7 @@ ABall::ABall()
 	ProjectileMeshComponent->SetupAttachment(RootComponent);
 
 	side = 0;
-	destroyTimer = 10.0f;
+	destroyTimer = 10000.0f;
 	stopped = false;
 }
 
@@ -88,6 +88,7 @@ void ABall::FireInDirection(const FVector& ShootDirection)
 	ProjectileMovementComponent->ProjectileGravityScale = 1.0f;
 	ProjectileMovementComponent->Velocity = ShootDirection * ProjectileMovementComponent->InitialSpeed;
 	SetActorEnableCollision(true);
+	ProjectileMovementComponent->SetUpdatedComponent(GetRootComponent());
 }
 
 void ABall::ResetTransform(const FVector& loc, const FQuat& dir) {
