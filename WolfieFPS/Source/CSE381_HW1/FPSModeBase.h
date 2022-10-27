@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "GameFramework/PlayerController.h"
+#include "FPSHUD.h"
 #include "FPSModeBase.generated.h"
 
 /**
@@ -24,5 +26,5 @@ public:
 
 	void OnWolfieHit(bool isBoss);
 
-	
+	int GetScore();
 };

@@ -30,8 +30,8 @@ ABall::ABall()
 		// Use this component to drive this projectile's movement.
 		ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("ProjectileMovementComponent"));
 		ProjectileMovementComponent->SetUpdatedComponent(CollisionComponent);
-		ProjectileMovementComponent->InitialSpeed = FMath::RandRange(2000.0f,5000.0f);
-		ProjectileMovementComponent->MaxSpeed = 5000.0f;
+		ProjectileMovementComponent->InitialSpeed = 2000.0f;
+		ProjectileMovementComponent->MaxSpeed = 3000.0f;
 		ProjectileMovementComponent->bRotationFollowsVelocity = true;
 		ProjectileMovementComponent->bShouldBounce = true;
 		ProjectileMovementComponent->Bounciness = 0.8f;
@@ -84,10 +84,10 @@ void ABall::Tick(float DeltaTime)
 // Function that initializes the projectile's velocity in the shoot direction.
 void ABall::FireInDirection(const FVector& ShootDirection)
 {
-	SetActorEnableCollision(true);
-	ProjectileMovementComponent->Velocity = ShootDirection * ProjectileMovementComponent->InitialSpeed;
+	stopped = false; 
 	ProjectileMovementComponent->ProjectileGravityScale = 1.0f;
-	stopped = false;
+	ProjectileMovementComponent->Velocity = ShootDirection * ProjectileMovementComponent->InitialSpeed;
+	SetActorEnableCollision(true);
 }
 
 void ABall::ResetTransform(const FVector& loc, const FQuat& dir) {
