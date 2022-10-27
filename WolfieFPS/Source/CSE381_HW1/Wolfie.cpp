@@ -22,7 +22,7 @@ void AWolfie::BeginPlay()
 
 	// Display a debug message for five seconds. 
 	// The -1 "Key" value argument prevents the message from being updated or refreshed.
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Wolfie Started."));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("Wolfie Started."));
 }
 
 // Called to bind functionality to input
@@ -37,7 +37,9 @@ void AWolfie::Fire()
 	if (ballInHand) {
 		ballInHand->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
 		FVector LaunchDirection = UKismetMathLibrary::GetDirectionUnitVector(GetTransform().GetLocation(), GetWorld()->GetFirstPlayerController()->GetPawn()->GetActorLocation());
+		LaunchDirection.Z = LaunchDirection.Z*2;
 		ballInHand->FireInDirection(LaunchDirection);
+		ballInHand->side = 2;
 		ballInHand = nullptr;
 	}
 }

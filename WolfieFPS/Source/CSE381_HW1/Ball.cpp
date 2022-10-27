@@ -87,10 +87,10 @@ void ABall::Tick(float DeltaTime)
 void ABall::FireInDirection(const FVector& ShootDirection)
 {
 	stopped = false; 
+	ProjectileMovementComponent->SetUpdatedComponent(GetRootComponent());
 	ProjectileMovementComponent->ProjectileGravityScale = 1.0f;
 	ProjectileMovementComponent->Velocity = ShootDirection * ProjectileMovementComponent->InitialSpeed;
 	SetActorEnableCollision(true);
-	ProjectileMovementComponent->SetUpdatedComponent(GetRootComponent());
 }
 
 void ABall::ResetTransform(const FVector& loc, const FQuat& dir) {

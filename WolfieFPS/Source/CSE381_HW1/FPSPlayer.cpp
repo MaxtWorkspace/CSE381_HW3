@@ -48,7 +48,7 @@ void AFPSPlayer::BeginPlay()
 
 	// Display a debug message for five seconds. 
 	// The -1 "Key" value argument prevents the message from being updated or refreshed.
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("FPS Player Started."));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("FPS Player Started."));
 	
 }
 
@@ -137,21 +137,26 @@ void AFPSPlayer::CatchBall(ABall* ball) {
 		ballInHand->AttachToComponent(FPSCameraComponent, FAttachmentTransformRules::KeepWorldTransform);
 	}
 	else {
-		ball->Destroy();
+		//ball->Destroy();
 	}
 }
 
 void AFPSPlayer::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("a"));
 	if (!OtherActor) return;
+	//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("b"));
 
 	ABall* ball = Cast<ABall>(OtherActor);
 	if (ball) {
+		//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("obj is ball"));
 		if (ball->side == 2) {
+			//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("ball is 2"));
 			AFPSModeBase* gm = Cast<AFPSModeBase>(GetWorld()->GetAuthGameMode());
 			gm->OnPlayerHit();
 			ball->Destroy();
 		}
 		else {
+			//GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("ball is not 2"));
 			CatchBall(ball);
 		}
 	}
