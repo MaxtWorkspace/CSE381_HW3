@@ -44,7 +44,7 @@ void AWolfie::Fire()
 
 void AWolfie::CatchBall(ABall* ball) {
 	// Attempt to catch a ball
-	if (ballInHand == nullptr) {
+	if (ballInHand == nullptr && !IsBoss) {
 		// Get the camera transform.
 		FVector CameraLocation;
 		FRotator CameraRotation;
